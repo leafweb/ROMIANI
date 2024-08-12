@@ -30,7 +30,7 @@ main.addEventListener('scroll', ()=> {
      AddClass(header,'hide');
      RemoveClass(fab,'hide');
   }
-  if(scrolled >= 1580){
+  if(scrolled >= 900){
      AddClass(header,'tertiary');
      AddClass(fab,'primary');
   } else {
