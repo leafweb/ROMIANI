@@ -18,7 +18,7 @@ let Fab = ()=> {
    if (event.currentTarget.classList.contains('hide')) {
       main.scrollTo({top: 0,behavior: 'smooth'});
    } else {
-      window.open('menu.html','_self')
+      window.open('menu.html','_self');
    }
 }
 main.addEventListener('scroll', ()=> {
@@ -29,5 +29,12 @@ main.addEventListener('scroll', ()=> {
   } else {
      AddClass(header,'hide');
      RemoveClass(fab,'hide');
+  }
+  if(scrolled >= 1580){
+     AddClass(header,'tertiary');
+     AddClass(fab,'primary');
+  } else {
+     RemoveClass(header,'tertiary');
+     RemoveClass(fab,'primary');
   }
 });

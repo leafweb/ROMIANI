@@ -13,15 +13,23 @@
 
    --secondary: hsl(34, 49%, 38%);
    --on-secondary: hsl(34, 49%, 82%);
-   
+
    --tertiary: hsl(112, 28%, 84%);
    --on-tertiary: hsl(112, 28%, 10%);
+   --light-tertiary: hsl(112, 28%, 90%);
+   --on-light-tertiary: hsl(112, 28%, 30%);
 }
+
 * {
    font-family: "Biennale";
    box-sizing: border-box;
    accent-color: var(--secondary);
    user-select: none;
+}
+
+svg,
+img {
+   max-width: 100%;
 }
 
 /*** layout ***/
@@ -33,6 +41,7 @@ body {
    background: var(--background);
    color: var(--on-background);
 }
+
 header {
    position: fixed;
    top: 0;
@@ -40,7 +49,6 @@ header {
    width: 100%;
    height: 70px;
    background: var(--light-primary);
-   backdrop-filter: blur(10px);
    color: var(--secondary);
    display: flex;
    justify-content: space-between;
@@ -49,29 +57,44 @@ header {
    box-shadow: 0 0 20px #0002;
    z-index: 5;
    transition: 0.3s;
+
    &.hide {
       translate: 0 -100%;
+
       &>*:not(.title) {
          translate: 0 70px;
-         span:active{
+
+         span:active {
             background: var(--light-primary);
          }
       }
    }
+   
+   &.tertiary{
+      background: var(--light-tertiary);
+      &>*{
+         color: var(--on-light-tertiary);
+      }
+   }
+
    &>* {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 8px;
+
       svg {
          width: 40px;
       }
+
       span {
          font-size: 28px;
          font-weight: 700;
       }
+
       transition: 0.3s;
    }
+
    &>*:not(.title) {
       &>* {
          display: flex;
@@ -82,6 +105,7 @@ header {
          font-size: 23px;
          border-radius: 16px;
          transition: 0.3s;
+
          &:active {
             scale: 0.9;
             background: var(--primary);
@@ -89,6 +113,7 @@ header {
       }
    }
 }
+
 main {
    position: fixed;
    top: 0;
@@ -97,6 +122,7 @@ main {
    height: 100%;
    overflow: hidden auto;
 }
+
 section {
    position: relative;
 }
@@ -107,6 +133,7 @@ section.start-part {
       padding: 16px;
       background: var(--primary);
       color: var(--on-primary);
+
       .logo {
          text-align: center;
          width: 100%;
@@ -117,15 +144,18 @@ section.start-part {
          flex-flow: row nowrap;
          justify-content: space-around;
          align-items: center;
+
          &>div {
             display: flex;
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
+
             svg {
                width: 90%;
                max-width: 200px;
             }
+
             svg.blob {
                scale: 1.3;
                translate: -50px 10px;
@@ -146,23 +176,25 @@ section.start-part {
                line-height: 0;
             }
          }
+
          &>h2 {
 
             font-size: 42px;
             font-weight: 900;
 
-            @media (max-width: 401px) {
+            @media (max-width: 481px) {
                display: none;
 
             }
          }
       }
+
       .text {
          h2 {
             font-size: 42px;
             font-weight: 900;
 
-            @media (min-width: 400px) {
+            @media (min-width: 480px) {
                display: none;
             }
          }
@@ -172,6 +204,7 @@ section.start-part {
          }
       }
    }
+
    .wave {
       width: 100%;
 
@@ -182,6 +215,7 @@ section.start-part {
       }
    }
 }
+
 section.part2 {
    .images {
       display: flex;
@@ -226,8 +260,85 @@ section.part2 {
    }
 }
 
-/*** UI ***/ 
-button.order-now{
+section.part3 {
+   article {
+      padding: 16px;
+      background: var(--tertiary);
+      color: var(--on-tertiary);
+
+      h2 {
+         font-size: 42px;
+         font-weight: 900;
+      }
+
+      .images {
+         &>* {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+            align-items: center;
+            padding: 24px 0;
+            gap: 16px;
+
+            .img {
+               width: 100%;
+               max-width: 300px;
+
+               svg {
+                  max-width: 300px;
+                  z-index: 0;
+                  scale: 1;
+                  translate: -100px 50px;
+                  position: absolute;
+                  fill: var(--light-tertiary);
+               }
+
+               img {
+
+                  position: relative;
+                  z-index: 2;
+                  border-radius: 24px;
+               }
+            }
+
+            .text {
+               max-width: 300px;
+               position: relative;
+               z-index: 2;
+            }
+            @media (min-width: 481px) {
+               &:nth-child(even){
+                  flex-flow: row-reverse wrap;
+               }
+            }
+         }
+      }
+   }
+
+   .wave {
+      width: 100%;
+
+      svg {
+         path {
+            fill: var(--tertiary);
+         }
+      }
+   }
+
+   .waveflip {
+      width: 100%;
+      rotate: 180deg;
+
+      svg {
+         path {
+            fill: var(--tertiary);
+         }
+      }
+   }
+}
+
+/*** UI ***/
+button.order-now {
    border: none;
    box-shadow: inset 0 0 0 1px #000;
    outline: none;
@@ -237,17 +348,20 @@ button.order-now{
    border-radius: 30px;
    font-size: 18px;
    padding: 0 16px;
-   &:hover{
+
+   &:hover {
       color: var(--primary);
       box-shadow: inset 0 0 0 30px #000;
    }
-   &:active{
+
+   &:active {
       color: var(--on-primary);
       box-shadow: inset 0 0 0 30px var(--primary);
       scale: 0.9;
    }
 }
-.fab{
+
+.fab {
    position: fixed;
    right: 16px;
    bottom: 23px;
@@ -266,31 +380,42 @@ button.order-now{
    border-radius: 20px;
    font-size: 18px;
    transition: 0.3s;
-   div{
+   
+   &.primary{
+      background: var(--primary);
+      color: var(--on-primary);
+   }
+
+   div {
       transition: 0.3s;
       overflow: hidden;
       max-width: 100px;
       white-space: nowrap;
    }
-   .si-l{
+
+   .si-l {
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 24px;
       transition: 0.3s;
    }
-   &.hide{
-      div{
+
+   &.hide {
+      div {
          max-width: 0;
       }
-      .si-l{
+
+      .si-l {
          rotate: -90deg;
       }
    }
-   &:hover{
+
+   &:hover {
       box-shadow: 0 20px 30px #0005;
    }
-   &:active{
+
+   &:active {
       scale: 0.9;
    }
 }
