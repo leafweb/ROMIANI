@@ -1,6 +1,8 @@
 let header = document.querySelector('header');
 let fab = document.querySelector('button.fab');
 let main = document.querySelector('main');
+let menu = document.querySelector('#menu');
+let menuBtn = document.querySelector('#menuBtn');
 let AddClass = (x, y) => {
    if (!x.classList.contains(y)) {
       x.classList.add(y);
@@ -21,6 +23,10 @@ let Fab = ()=> {
       window.open('menu.html','_self');
    }
 }
+let Menu = ()=> {
+   ToggleClass(menu,'show');
+   ToggleClass(menuBtn,'show');
+}
 main.addEventListener('scroll', ()=> {
   let scrolled = main.scrollTop;
   if (scrolled >= 250) {
@@ -29,12 +35,5 @@ main.addEventListener('scroll', ()=> {
   } else {
      AddClass(header,'hide');
      RemoveClass(fab,'hide');
-  }
-  if(scrolled >= 900){
-     AddClass(header,'tertiary');
-     AddClass(fab,'primary');
-  } else {
-     RemoveClass(header,'tertiary');
-     RemoveClass(fab,'primary');
   }
 });
