@@ -36,27 +36,24 @@ window.addEventListener('scroll', () => {
       RemoveClass(fab, 'hide');
    }
 });
-
-
-let elements = document.querySelectorAll('.scrollAnim');
-let callback = (entries, observer) => {
-   entries.forEach(entry => {
-      if (entry.isIntersecting) {
-         entry.target.classList.add('showAnim');
-      } else {
-         entry.target.classList.remove('showAnim');
-      }
+window.addEventListener('load', function() {
+   let elements = document.querySelectorAll('.scrollAnim');
+   let callback = (entries, observer) => {
+      entries.forEach(entry => {
+         if (entry.isIntersecting) {
+            entry.target.classList.add('showAnim');
+         } else {
+            entry.target.classList.remove('showAnim');
+         }
+      });
+   };
+   const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0
+   };
+   const observer = new IntersectionObserver(callback, options);
+   elements.forEach(element => {
+      observer.observe(element);
    });
-};
-
-const options = {
-   root: null,
-   rootMargin: '0px',
-   threshold: 0
-};
-
-const observer = new IntersectionObserver(callback, options);
-
-elements.forEach(element => {
-   observer.observe(element);
 });
