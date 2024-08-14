@@ -190,28 +190,31 @@ header {
    height: 0;
    background: var(--light-primary);
    overflow: hidden;
-   transition: 0.3s;
    padding: 0 20px;
    z-index: 10;
+   transition: 0.5s 1s;
 
    &.show {
+      transition: 0.5s 0s;
       padding-top: 70px;
       height: 100%;
 
-      .list,
-      h3,
-      .hwr {
-         top: 0;
-         opacity: 1;
+      .menu-anim {
+         animation: show 0.5s var(--d) both;
       }
    }
+
+   &:not(.show) {
+      .menu-anim {
+         animation: hide 0.5s var(--d) both;
+      }
+   }
+
 
    .list,
    h3,
    .hwr {
       position: relative;
-      top: 50px;
-      opacity: 0;
       display: flex;
       flex-flow: column nowrap;
       justify-content: center;
@@ -220,6 +223,7 @@ header {
       transition: 0.3s;
 
       a {
+         position: relative;
          display: flex;
          justify-content: space-between;
          align-items: center;
@@ -230,7 +234,12 @@ header {
          height: 40px;
          width: 100%;
          max-width: 300px;
+         overflow: hidden;
          transition: 0.3s;
+
+         span {
+            white-space: nowrap;
+         }
 
          svg {
             width: 24px;
@@ -258,15 +267,16 @@ footer {
       background: #000;
       color: var(--primary);
       padding: 16px;
-      
-      h4{
+
+      h4 {
          margin: 16px 0;
          font-size: 20px;
       }
-      
-      address{
+
+      address {
          padding: 0;
       }
+
       .contact {
          .list {
             border-radius: 20px;
@@ -302,19 +312,22 @@ footer {
             }
          }
       }
+
       .copyright {
          display: flex;
          flex-flow: column nowrap;
          justify-content: center;
          align-items: center;
          padding: 24px 0;
-         &>*{
+
+         &>* {
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 14px;
             font-weight: 700;
             gap: 8px;
+
             svg {
                width: 16px;
                fill: var(--primary);
@@ -768,5 +781,30 @@ a.order-now {
    svg {
       max-width: 300px;
       stroke: var(--primary);
+   }
+}
+
+/*** Animation ***/
+@keyframes show {
+   from {
+      top: 100px;
+      opacity: 0;
+   }
+
+   to {
+      top: 0;
+      opacity: 1;
+   }
+}
+
+@keyframes hide {
+   from {
+      top: 0;
+      opacity: 1;
+   }
+
+   to {
+      top: -100px;
+      opacity: 0;
    }
 }
