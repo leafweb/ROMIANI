@@ -682,7 +682,6 @@ section.part4 {
 }
 
 a.order-now {
-   all: unset;
    display: inline-flex;
    justify-content: center;
    align-items: center;
@@ -697,6 +696,8 @@ a.order-now {
    font-size: 18px;
    padding: 0 16px;
    cursor: pointer;
+   color: currentColor;
+   text-decoration: none;
 
    svg {
       width: 22px;
@@ -785,6 +786,15 @@ a.order-now {
 }
 
 /*** Animation ***/
+.scrollAnim{
+   top: 100px;
+   opacity: 0;
+   position: relative!important;
+   &.showAnim{
+      animation: show 1s 0.5s both;
+   }
+}
+
 @keyframes show {
    from {
       top: 100px;
