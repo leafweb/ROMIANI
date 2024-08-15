@@ -104,7 +104,7 @@ header {
 header svg {
   width: 40px;
 }
-header span {
+header h1 {
   font-size: 28px;
   font-weight: 700;
 }
@@ -450,21 +450,13 @@ section.start-part article .logo > div span {
 section.start-part article .logo > div span {
   line-height: 0;
 }
-section.start-part article .logo > h2 {
-  font-size: 42px;
-  font-weight: 900;
-}
 @media (max-width: 481px) {
   section.start-part article .logo > h2 {
     display: none;
   }
 }
-section.start-part article .text h2 {
-  font-size: 42px;
-  font-weight: 900;
-}
 @media (min-width: 480px) {
-  section.start-part article .text h2 {
+  section.start-part article .text {
     display: none;
   }
 }
@@ -477,10 +469,6 @@ section.start-part .waveflip svg {
 }
 section.part2 {
   padding: 16px;
-}
-section.part2 h3 {
-  font-size: 32px;
-  font-weight: 900;
 }
 section.part2 ul {
   margin: 0;
@@ -611,10 +599,6 @@ section.part3 article {
   background: var(--light-tertiary);
   color: var(--on-light-tertiary);
 }
-section.part3 article h3 {
-  font-size: 32px;
-  font-weight: 900;
-}
 section.part3 article .images > * {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -636,7 +620,7 @@ section.part3 article .images > * .img {
   max-width: 300px;
 }
 section.part3 article .images > * .img svg {
-  max-width: 300px;
+  max-width: 460px;
   z-index: 0;
   scale: 1;
   translate: -50px 50px;
@@ -649,7 +633,7 @@ section.part3 article .images > * .img img {
   border-radius: 24px;
 }
 section.part3 article .images > * .text {
-  max-width: 300px;
+  max-width: 460px;
   position: relative;
   z-index: 2;
 }
@@ -713,10 +697,6 @@ section.part4 .images img:nth-child(3) {
 }
 section.part4 .text {
   padding: 16px;
-}
-section.part4 .text h3 {
-  font-size: 32px;
-  font-weight: 900;
 }
 section.part4 .text h4 {
   font-size: 24px;
@@ -853,6 +833,17 @@ a.order-now:active {
 .hwr svg {
   max-width: 300px;
   stroke: var(--primary);
+}
+p{
+   font-size: 14px;
+}
+h2{
+   font-size: 38px;
+   font-weight: 900;
+}
+h3{
+   font-size: 32px;
+   font-weight: 800;
 }
 /*** Animation ***/
 .scrollAnim {
