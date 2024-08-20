@@ -40,11 +40,11 @@ window.addEventListener('load', function() {
    });
 });
 
-const url = 'https://romianipastry.de/call.php';
-const data = {req_m: 'get_lp',page: 3};
+let url = 'https://romianipastry.de/call.php';
+let data = {req_m: 'get_lp',page: 3};
 
 fetch(url, {
-  method: 'GET',
+  method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
