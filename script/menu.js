@@ -39,3 +39,21 @@ window.addEventListener('load', function() {
       observer.observe(element);
    });
 });
+
+const url = 'https://romianipastry.de/call.php';
+const data = {req_m: 'get_lp',page: 3};
+
+fetch(url, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(data)
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
