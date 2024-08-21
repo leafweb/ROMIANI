@@ -1,6 +1,7 @@
 let header = document.querySelector('header');
 let menu = document.querySelector('#menu');
 let menuBtn = document.querySelector('#menuBtn');
+let cardsContainer = document.querySelector('#cardsContainer');
 let AddClass = (x, y) => {
    if (!x.classList.contains(y)) {
       x.classList.add(y);
@@ -13,6 +14,19 @@ let RemoveClass = (x, y) => {
 }
 let ToggleClass = (x, y) => {
    x.classList.toggle(y);
+}
+let Cards = (x)=> {
+   cardsContainer.innerHTML = `
+      <div class="card">
+         <img src="${x.profile}">
+         <h4> ${pname} </h4>
+         <p> ${pdescribe} </p>
+         <div>
+            <span> ${x.price}$ </span>
+            <span class="type"> cookie </span>
+         </div>
+      </div>
+   `;
 }
 let Menu = () => {
    ToggleClass(menu, 'show');
@@ -41,21 +55,29 @@ window.addEventListener('load', function() {
 });
 
 let url = 'https://romianipastry.de/call.php';
-let data = [];
+let input = { req_m: 'get_lp', page: 1 };
 
-
-for (var i = 0; i < 10; i++) {
-   fetch(url, {
-      method: 'POST',
-      headers: {
-         'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ req_m: 'get_lp', page: i })
-   }).then(response => response.json()).then(x => {
-      console.log('Success:', x);
-      data.push(x);
-   }).catch((error) => {
-      console.error('Error:', error);
-   });
-
-}
+fetch(url, {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify(input)
+})
+.then(response => response.json())
+.then(data => {
+   cardsContainer.innerHTML = '';
+   for (x of data) {
+      cardsContainer.innerHTML += `
+      <div class="card">
+         <img src="${x.profile}">
+         <h4> ${x.pname} </h4>
+         <p> ${x.pdescribe} </p>
+         <div>
+            <span> ${x.price}$ </span>
+            <span class="type"> cookie </span>
+         </div>
+      </div>
+   `;
+   }
+}).catch((error) => {
+   console.error('Error:', error);
+});
