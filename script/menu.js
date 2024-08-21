@@ -41,24 +41,21 @@ window.addEventListener('load', function() {
 });
 
 let url = 'https://romianipastry.de/call.php';
-let data = { req_m: 'get_lp', page: i };
+let data = [];
 
 
 for (var i = 0; i < 10; i++) {
    fetch(url, {
-         method: 'GET',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(x => {
-         console.log('Success:', x);
-         data.push(x);
-      })
-      .catch((error) => {
-         console.error('Error:', error);
-      });
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ req_m: 'get_lp', page: i })
+   }).then(response => response.json()).then(x => {
+      console.log('Success:', x);
+      data.push(x);
+   }).catch((error) => {
+      console.error('Error:', error);
+   });
 
 }
