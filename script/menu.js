@@ -41,17 +41,16 @@ window.addEventListener('load', function() {
 });
 
 let url = 'https://romianipastry.de/call.php';
-
-let data = [];
+let data = { req_m: 'get_lp', page: i };
 
 
 for (var i = 0; i < 10; i++) {
    fetch(url, {
-         method: 'POST',
+         method: 'GET',
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({ req_m: 'get_lp', page: i })
+         body: JSON.stringify(data)
       })
       .then(response => response.json())
       .then(x => {
