@@ -2,6 +2,10 @@ let header = document.querySelector('header');
 let menu = document.querySelector('#menu');
 let menuBtn = document.querySelector('#menuBtn');
 let cardsContainer = document.querySelector('#cardsContainer');
+let backBtn = document.querySelector('#backBtn');
+let nextBtn = document.querySelector('#nextBtn');
+let pageNum = 1;
+let url = 'https://romianipastry.de/call.php';
 let AddClass = (x, y) => {
    if (!x.classList.contains(y)) {
       x.classList.add(y);
@@ -15,23 +19,70 @@ let RemoveClass = (x, y) => {
 let ToggleClass = (x, y) => {
    x.classList.toggle(y);
 }
-let Cards = (x)=> {
-   cardsContainer.innerHTML = `
+let Menu = () => {
+   ToggleClass(menu, 'show');
+   ToggleClass(menuBtn, 'show');
+}
+let Cards = (data) => {
+   cardsContainer.innerHTML = '';
+   for (x of data) {
+      cardsContainer.innerHTML += `
       <div class="card">
          <img src="${x.profile}">
-         <h4> ${pname} </h4>
-         <p> ${pdescribe} </p>
+         <h4> ${x.pname} </h4>
+         <p> ${x.pdescribe} </p>
          <div>
             <span> ${x.price}$ </span>
             <span class="type"> cookie </span>
          </div>
       </div>
    `;
+   }
 }
-let Menu = () => {
-   ToggleClass(menu, 'show');
-   ToggleClass(menuBtn, 'show');
+let Next = () => {
+   pageNum = pageNum + 1;
+   FetchData(pageNum);
 }
+let Back = () => {
+   pageNum = pageNum - 1;
+   FetchData(pageNum);
+}
+let FetchData = (x) => {
+   fetch(url, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({req_m:'get_lp',page: x})
+      })
+      .then(response => response.json())
+      .then(data => {
+         Cards(data);
+      })
+      .catch((error) => {
+         console.error('Error:', error);
+      });
+   // btns
+   backBtn.disabled = (pageNum == 1);
+   nextBtn.disabled = true;
+   fetch(url, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({req_m:'get_lp',page: (x + 1)})
+      })
+      .then(response => response.json())
+      .then(data => {
+         nextBtn.disabled = false;
+         if (data.length == 0) {
+            nextBtn.disabled = true;
+         }
+      })
+      .catch((error) => {
+         nextBtn.disabled = true;
+      });
+}
+FetchData(pageNum);
+nextBtn.onclick = () => Next();
+backBtn.onclick = () => Back();
+
 window.addEventListener('load', function() {
    let elements = document.querySelectorAll('.scrollAnim');
    let callback = (entries, observer) => {
@@ -52,32 +103,4 @@ window.addEventListener('load', function() {
    elements.forEach(element => {
       observer.observe(element);
    });
-});
-
-let url = 'https://romianipastry.de/call.php';
-let input = { req_m: 'get_lp', page: 1 };
-
-fetch(url, {
-   method: 'POST',
-   headers: { 'Content-Type': 'application/json' },
-   body: JSON.stringify(input)
-})
-.then(response => response.json())
-.then(data => {
-   cardsContainer.innerHTML = '';
-   for (x of data) {
-      cardsContainer.innerHTML += `
-      <div class="card">
-         <img src="${x.profile}">
-         <h4> ${x.pname} </h4>
-         <p> ${x.pdescribe} </p>
-         <div>
-            <span> ${x.price}$ </span>
-            <span class="type"> cookie </span>
-         </div>
-      </div>
-   `;
-   }
-}).catch((error) => {
-   console.error('Error:', error);
 });

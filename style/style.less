@@ -286,21 +286,18 @@ main{
       background: var(--light-primary);
       .container{
          display: grid;
-         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
          gap: 10px;
          padding: 10px;
          transition: 0.3s;
          background: var(--primary);
          border-radius: 30px;
          .card{
-            aspect-ratio: 3/5;
-            max-width: 180px;
-            display: flex;
-            flex-flow: column nowrap;
-            justify-content: space-between;
-            align-items: stretch;
-            border-radius: 20px;
             position: relative;
+            aspect-ratio: 6/11;
+            max-width: 150px;
+            display: block;
+            border-radius: 15px;
             background: var(--background);
             color: var(--on-background);
             overflow: hidden;
@@ -324,8 +321,8 @@ main{
                position: absolute;
                bottom: -20px;
                right: -20px;
-               width: 100px;
-               height: 100px;
+               width: 80px;
+               height: 80px;
                background: var(--light-primary);
                z-index: 0;
                mask-size: contain;
@@ -343,9 +340,9 @@ main{
             }
             h4{
                margin: 0;
-               padding: 8px 16px;
+               padding: 4px;
                text-align: left;
-               font-size: 20px;
+               font-size: 14px;
                font-weight: 900;
             }
             p{
@@ -360,17 +357,48 @@ main{
                overflow: hidden auto;
             }
             div{
+               position: absolute;
+               bottom: 0;
+               left: 0;
+               width: 100%;
                display: flex;
                flex-flow: row nowrap;
                justify-content: space-between;
                align-items: center;
-               padding: 8px 8px;
+               padding: 4px;
+               font-size: 14px;
                .type{
                   background: var(--tertiary);
                   color: var(--on-tertiary);
                   border-radius: 20px;
-                  padding: 0 8px;
+                  padding: 0 4px;
                }
+            }
+         }
+      }
+      .next-back{
+         display: flex;
+         flex-flow: row nowrap;
+         justify-content: space-between;
+         align-items: stretch;
+         height: 50px;
+         padding: 8px 0;
+         gap: 8px;
+         button{
+            flex-grow: 1;
+            background: var(--dark-primary);
+            color: var(--on-dark-primary);
+            outline: none;
+            border: none;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 900;
+            transition: 0.3s;
+            &:active{
+               scale: 0.9;
+            }
+            &:disabled{
+               opacity: 0.5;
             }
          }
       }
