@@ -4,8 +4,6 @@ let menuBtn = document.querySelector('#menuBtn');
 let cardsContainer = document.querySelector('#cardsContainer');
 let backBtn = document.querySelector('#backBtn');
 let nextBtn = document.querySelector('#nextBtn');
-let pageNum = 1;
-let url = 'https://romianipastry.de/call.php';
 let AddClass = (x, y) => {
    if (!x.classList.contains(y)) {
       x.classList.add(y);
@@ -39,49 +37,6 @@ let Cards = (data) => {
    `;
    }
 }
-let Next = () => {
-   pageNum = pageNum + 1;
-   FetchData(pageNum);
-}
-let Back = () => {
-   pageNum = pageNum - 1;
-   FetchData(pageNum);
-}
-let FetchData = (x) => {
-   fetch(url, {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({req_m:'get_lp',page: x})
-      })
-      .then(response => response.json())
-      .then(data => {
-         Cards(data);
-      })
-      .catch((error) => {
-         console.error('Error:', error);
-      });
-   // btns
-   backBtn.disabled = (pageNum == 1);
-   nextBtn.disabled = true;
-   fetch(url, {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({req_m:'get_lp',page: (x + 1)})
-      })
-      .then(response => response.json())
-      .then(data => {
-         nextBtn.disabled = false;
-         if (data.length == 0) {
-            nextBtn.disabled = true;
-         }
-      })
-      .catch((error) => {
-         nextBtn.disabled = true;
-      });
-}
-FetchData(pageNum);
-nextBtn.onclick = () => Next();
-backBtn.onclick = () => Back();
 
 window.addEventListener('load', function() {
    let elements = document.querySelectorAll('.scrollAnim');
@@ -104,3 +59,41 @@ window.addEventListener('load', function() {
       observer.observe(element);
    });
 });
+
+let url = 'data.json';
+let indexArray = 0;
+let pageNum = 1;
+let nx = 3;
+let fetchResults;
+let FetchData = ()=> {
+   fetch(url, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({req_m: 'get_lp', page: 1})
+      })
+      .then(response => response.json())
+      .then(data => {
+         fetchResults = data;
+         ShowItems();
+      })
+      .catch((error) => {
+         console.error(error);
+      });
+}
+let ShowItems = ()=> {
+   let newArr = fetchResults.slice(indexArray * nx, (indexArray * nx) + nx);
+   Cards(newArr);
+   nextBtn.disabled = fetchResults.length - indexArray * nx <= nx;
+   backBtn.disabled = indexArray == 0;
+}
+let NextArr = ()=> {
+   indexArray = indexArray + 1;
+   ShowItems();
+}
+let BackArr = ()=> {
+   indexArray = indexArray - 1;
+   ShowItems();
+}
+nextBtn.onclick = () => NextArr();
+backBtn.onclick = () => BackArr();
+FetchData();
