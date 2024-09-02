@@ -82,7 +82,6 @@ let items = [];
 let filteredItems = [];
 let searchedItems = [];
 let finalResults = []
-
 fetch(url)
   .then(response => response.json())
   .then(data => {
@@ -91,14 +90,13 @@ fetch(url)
     Search();
   })
   .catch(error => console.error('Error fetching data:', error));
-
+  
 function getCurrentPageItems() {
   let start = currentPage * pageSize;
   let end = start + pageSize;
   finalResults = searchedItems.slice(start, end);
   return finalResults
 }
-
 function Next() {
   if ((currentPage + 1) * pageSize < searchedItems.length) {
     currentPage++;
@@ -108,7 +106,6 @@ function Next() {
   updateButtons();
   history.pushState({ page: currentPage }, '');
 }
-
 function Back() {
   if (currentPage > 0) {
     currentPage--;
@@ -118,7 +115,6 @@ function Back() {
   updateButtons();
   history.pushState({ page: currentPage }, '');
 }
-
 function updateButtons() {
    let nextBtn = document.getElementById('nextBtn');
    let backBtn = document.getElementById('backBtn');
@@ -137,7 +133,6 @@ function updateButtons() {
    
    ClearHistory();
 }
-
 function Filter(types) {
    if (!types || types.length === 0) {
       filteredItems = items;
@@ -150,12 +145,10 @@ function Filter(types) {
    ShowItems(getCurrentPageItems());
    updateButtons();
 }
-
 function formFilter(form){
    let formData = new FormData(form);
    Filter(formData.getAll('type'))
 }
-
 function Search(query) {
    if (!query) {
       searchedItems = filteredItems;
@@ -169,7 +162,6 @@ function Search(query) {
    ShowItems(getCurrentPageItems());
    updateButtons();
 } 
-
 function ClearHistory() {
   history.replaceState(null, '', location.href);
   history.pushState(null, '', location.href);
@@ -177,8 +169,6 @@ function ClearHistory() {
     history.pushState(null, '', location.href);
   });
 }
-
-
 window.onpopstate = function(event) {
    if (event.state && event.state.page !== undefined) {
       currentPage = event.state.page;
