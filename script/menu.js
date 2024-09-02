@@ -48,9 +48,7 @@ let List = (data) => {
 let ShowInfo = (x) => {
    dialog.showModal();
    dialog.innerHTML = `
-      <div class="profile">
-         <img src="${fetchResults[x].profile}">
-      </div>
+      <img src="${fetchResults[x].profile}">
       <div class="text">
          <div>
             <span class="title"> ${fetchResults[x].pname} </span>

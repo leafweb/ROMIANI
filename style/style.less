@@ -787,10 +787,19 @@ input[type="checkbox"].chip {
 
 dialog {
    width: 80%;
+   max-height: 80%;
    &[open]{
       display: flex;
    }
-   flex-flow: row wrap;
+   @media (max-width: 480px){
+      flex-flow: column nowrap;
+   }
+   @media (max-width: 481px){
+      flex-flow: row nowrap;
+      img{
+         max-height: 250px;
+      }
+   }
    justify-content: space-between;
    align-items: stretch;
    background: var(--background);
@@ -805,14 +814,13 @@ dialog {
    transition: 0.3s;
    img{
       display: block;
-      height: 100%;
    }
    .text{
       display: flex;
       flex-flow: column nowrap;
       justify-content: space-between;
       align-items: stretch;
-      flex-grow: 1;
+      flex-grow: 3;
       padding: 10px;
       .title{
          display: block;
