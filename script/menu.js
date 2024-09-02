@@ -26,7 +26,7 @@ let Menu = () => {
 let Fab = () => {
    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-let List = (data) => {
+let ShowItems = (data) => {
    listElm.innerHTML = '';
    for (x in data) {
       listElm.innerHTML += `
@@ -48,14 +48,14 @@ let List = (data) => {
 let ShowInfo = (x) => {
    dialog.showModal();
    dialog.innerHTML = `
-      <img src="${fetchResults[x].profile}">
+      <img src="${finalResults[x].profile}">
       <div class="text">
          <div>
-            <span class="title"> ${fetchResults[x].pname} </span>
-            <span> ${fetchResults[x].pdescribe} </span>
+            <span class="title"> ${finalResults[x].pname} </span>
+            <span> ${finalResults[x].pdescribe} </span>
             <div class="d">
-               <span> ${fetchResults[x].price}$ </span>
-               <span class="type"> ${fetchResults[x].type} </span>
+               <span> ${finalResults[x].price}$ </span>
+               <span class="type"> ${finalResults[x].type} </span>
             </div>
          </div>
          <button onclick="dialog.close()"> close </button>
@@ -64,7 +64,7 @@ let ShowInfo = (x) => {
 }
 window.addEventListener('scroll', () => {
    let scrolled = window.scrollY;
-   if (scrolled >= 300) {
+   if (scrolled >= 250) {
       AddClass(header, 'small');
       AddClass(filtersBox, 'small');
       RemoveClass(fab, 'hide');
@@ -76,29 +76,113 @@ window.addEventListener('scroll', () => {
 });
 
 let url = 'data.json';
-let indexArray = 0;
-let nx = 100;
-let fetchResults;
-let FetchData = ()=> {
-   fetch(url, {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({req_m: 'get_lp', page: 1})
-      })
-      .then(response => response.json())
-      .then(data => {
-         fetchResults = data;
-         ShowItems();
-      })
-      .catch((error) => {
-         console.error(error);
-      });
+let currentPage = 0;
+let pageSize = 50;
+let items = [];
+let filteredItems = [];
+let searchedItems = [];
+let finalResults = []
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    items = data;
+    Filter();
+    Search();
+  })
+  .catch(error => console.error('Error fetching data:', error));
+
+function getCurrentPageItems() {
+  let start = currentPage * pageSize;
+  let end = start + pageSize;
+  finalResults = searchedItems.slice(start, end);
+  return finalResults
 }
-let ShowItems = ()=> {
-   let newArr = fetchResults.slice(indexArray * nx, (indexArray * nx) + nx);
-   List(newArr);
+
+function Next() {
+  if ((currentPage + 1) * pageSize < searchedItems.length) {
+    currentPage++;
+    ShowItems(getCurrentPageItems()); // نمایش آیتم‌های صفحه بعد
+  }
+  window.scrollTo({ top: 330, behavior: 'smooth' });
+  updateButtons();
+  history.pushState({ page: currentPage }, '');
 }
-let LoadMore = ()=> {
+
+function Back() {
+  if (currentPage > 0) {
+    currentPage--;
+    ShowItems(getCurrentPageItems()); // نمایش آیتم‌های صفحه قبل
+  }
+  window.scrollTo({ top: 330, behavior: 'smooth' });
+  updateButtons();
+  history.pushState({ page: currentPage }, '');
+}
+
+function updateButtons() {
+   let nextBtn = document.getElementById('nextBtn');
+   let backBtn = document.getElementById('backBtn');
+
+   if ((currentPage + 1) * pageSize >= searchedItems.length) {
+      nextBtn.disabled = true;
+   } else {
+      nextBtn.disabled = false;
+   }
+
+   if (currentPage === 0) {
+      backBtn.disabled = true;
+   } else {
+      backBtn.disabled = false;
+   }
    
+   ClearHistory();
 }
-FetchData();
+
+function Filter(types) {
+   if (!types || types.length === 0) {
+      filteredItems = items;
+      ShowItems(getCurrentPageItems());
+      updateButtons();
+      return;
+   }
+   filteredItems = items.filter(item => types.includes(item.type));
+   currentPage = 0;
+   ShowItems(getCurrentPageItems());
+   updateButtons();
+}
+
+function formFilter(form){
+   let formData = new FormData(form);
+   Filter(formData.getAll('type'))
+}
+
+function Search(query) {
+   if (!query) {
+      searchedItems = filteredItems;
+      ShowItems(getCurrentPageItems());
+      updateButtons();
+      return;
+   }
+   const regex = new RegExp(query.split('').join('.*'), 'i');
+   searchedItems = filteredItems.filter(filteredItems => regex.test(filteredItems.pname));
+   currentPage = 0;
+   ShowItems(getCurrentPageItems());
+   updateButtons();
+} 
+
+function ClearHistory() {
+  history.replaceState(null, '', location.href);
+  history.pushState(null, '', location.href);
+  window.addEventListener('popstate', function() {
+    history.pushState(null, '', location.href);
+  });
+}
+
+
+window.onpopstate = function(event) {
+   if (event.state && event.state.page !== undefined) {
+      currentPage = event.state.page;
+      ShowItems(getCurrentPageItems());
+      updateButtons();
+   }
+};
