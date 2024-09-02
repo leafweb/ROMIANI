@@ -1,9 +1,11 @@
 let header = document.querySelector('header');
+let searchBox = document.querySelector('#searchBox');
+let filtersBox = document.querySelector('.filters');
 let menu = document.querySelector('#menu');
 let menuBtn = document.querySelector('#menuBtn');
-let cardsContainer = document.querySelector('#cardsContainer');
-let backBtn = document.querySelector('#backBtn');
-let nextBtn = document.querySelector('#nextBtn');
+let fab = document.querySelector('button.fab');
+let listElm = document.querySelector('#list');
+let dialog = document.querySelector('dialog');
 let AddClass = (x, y) => {
    if (!x.classList.contains(y)) {
       x.classList.add(y);
@@ -21,49 +23,63 @@ let Menu = () => {
    ToggleClass(menu, 'show');
    ToggleClass(menuBtn, 'show');
 }
-let Cards = (data) => {
-   cardsContainer.innerHTML = '';
-   for (x of data) {
-      cardsContainer.innerHTML += `
-      <div class="card">
-         <img src="${x.profile}">
-         <h4> ${x.pname} </h4>
-         <p> ${x.pdescribe} </p>
-         <div>
-            <span> ${x.price}$ </span>
-            <span class="type"> cookie </span>
+let Fab = () => {
+   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+let List = (data) => {
+   listElm.innerHTML = '';
+   for (x in data) {
+      listElm.innerHTML += `
+      <div class="item" onclick="ShowInfo(${x})">
+         <div class="profile">
+            <img src="${data[x].profile}">
+         </div>
+         <div class="text">
+            <span class="title"> ${data[x].pname} </span>
+            <div>
+               <span> ${data[x].price}$ </span>
+               <span class="type"> ${data[x].type} </span>
+            </div>
          </div>
       </div>
    `;
    }
 }
-
-window.addEventListener('load', function() {
-   let elements = document.querySelectorAll('.scrollAnim');
-   let callback = (entries, observer) => {
-      entries.forEach(entry => {
-         if (entry.isIntersecting) {
-            entry.target.classList.add('showAnim');
-         } else {
-            entry.target.classList.remove('showAnim');
-         }
-      });
-   };
-   const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0
-   };
-   const observer = new IntersectionObserver(callback, options);
-   elements.forEach(element => {
-      observer.observe(element);
-   });
+let ShowInfo = (x) => {
+   dialog.showModal();
+   dialog.innerHTML = `
+      <div class="profile">
+         <img src="${fetchResults[x].profile}">
+      </div>
+      <div class="text">
+         <div>
+            <span class="title"> ${fetchResults[x].pname} </span>
+            <span> ${fetchResults[x].pdescribe} </span>
+            <div class="d">
+               <span> ${fetchResults[x].price}$ </span>
+               <span class="type"> ${fetchResults[x].type} </span>
+            </div>
+         </div>
+         <button onclick="dialog.close()"> close </button>
+      </div>
+   `
+}
+window.addEventListener('scroll', () => {
+   let scrolled = window.scrollY;
+   if (scrolled >= 300) {
+      AddClass(header, 'small');
+      AddClass(filtersBox, 'small');
+      RemoveClass(fab, 'hide');
+   } else {
+      RemoveClass(header, 'small');
+      RemoveClass(filtersBox, 'small');
+      AddClass(fab, 'hide');
+   }
 });
 
 let url = 'data.json';
 let indexArray = 0;
-let pageNum = 1;
-let nx = 3;
+let nx = 100;
 let fetchResults;
 let FetchData = ()=> {
    fetch(url, {
@@ -82,18 +98,9 @@ let FetchData = ()=> {
 }
 let ShowItems = ()=> {
    let newArr = fetchResults.slice(indexArray * nx, (indexArray * nx) + nx);
-   Cards(newArr);
-   nextBtn.disabled = fetchResults.length - indexArray * nx <= nx;
-   backBtn.disabled = indexArray == 0;
+   List(newArr);
 }
-let NextArr = ()=> {
-   indexArray = indexArray + 1;
-   ShowItems();
+let LoadMore = ()=> {
+   
 }
-let BackArr = ()=> {
-   indexArray = indexArray - 1;
-   ShowItems();
-}
-nextBtn.onclick = () => NextArr();
-backBtn.onclick = () => BackArr();
 FetchData();

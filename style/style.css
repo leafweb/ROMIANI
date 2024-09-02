@@ -208,6 +208,7 @@ header.hide {
   -o-transition: 0.5s 0s;
   transition: 0.5s 0s;
   padding-top: 70px;
+  padding-bottom: 20px;
   height: 100%;
 }
 #menu.show .menu-anim {
@@ -286,6 +287,9 @@ header.hide {
 #menu .hwr a:active {
   background: var(--secondary);
   color: var(--on-secondary);
+}
+#menu::-webkit-scrollbar{
+   display: none;
 }
 section {
   position: relative;
