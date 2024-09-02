@@ -280,7 +280,7 @@
 	 display: block;
 	 opacity: 0;
 	 scale: 0;
-	 width: calc(-38%);
+	 width: width: calc(100% - 138px);
 	 height: 54px;
 	 -webkit-transition: 0.3s;
 	 -o-transition: 0.3s;
