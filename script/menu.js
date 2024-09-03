@@ -1,6 +1,7 @@
 let header = document.querySelector('header');
 let searchBox = document.querySelector('#searchBox');
 let filtersBox = document.querySelector('.filters');
+let filtersFormElm = document.querySelector('.filters>form');
 let menu = document.querySelector('#menu');
 let menuBtn = document.querySelector('#menuBtn');
 let fab = document.querySelector('button.fab');
@@ -77,17 +78,25 @@ window.addEventListener('scroll', () => {
 
 let url = 'data.json';
 let currentPage = 0;
+let currentSearch = '';
 let pageSize = 50;
 let items = [];
 let filteredItems = [];
 let searchedItems = [];
-let finalResults = []
+let finalResults = [];
+let allTypes = [];
+
 fetch(url)
   .then(response => response.json())
   .then(data => {
     items = data;
     Filter();
     Search();
+    allTypes = [...new Set(items.map(item => item.type))];
+    filtersFormElm.innerHTML = '';
+    for (i of allTypes) {
+       filtersFormElm.innerHTML += `<input class="chip" type="checkbox" name="type" value="${i}"> `;
+    }
   })
   .catch(error => console.error('Error fetching data:', error));
   
@@ -104,7 +113,6 @@ function Next() {
   }
   window.scrollTo({ top: 330, behavior: 'smooth' });
   updateButtons();
-  history.pushState({ page: currentPage }, '');
 }
 function Back() {
   if (currentPage > 0) {
@@ -113,7 +121,6 @@ function Back() {
   }
   window.scrollTo({ top: 330, behavior: 'smooth' });
   updateButtons();
-  history.pushState({ page: currentPage }, '');
 }
 function updateButtons() {
    let nextBtn = document.getElementById('nextBtn');
@@ -130,8 +137,6 @@ function updateButtons() {
    } else {
       backBtn.disabled = false;
    }
-   
-   ClearHistory();
 }
 function Filter(types) {
    if (!types || types.length === 0) {
@@ -147,7 +152,8 @@ function Filter(types) {
 }
 function formFilter(form){
    let formData = new FormData(form);
-   Filter(formData.getAll('type'))
+   Filter(formData.getAll('type'));
+   Search(currentSearch)
 }
 function Search(query) {
    if (!query) {
@@ -156,23 +162,10 @@ function Search(query) {
       updateButtons();
       return;
    }
-   const regex = new RegExp(query.split('').join('.*'), 'i');
+   currentSearch = query;
+   let regex = new RegExp(query.split('').join('.*'), 'i');
    searchedItems = filteredItems.filter(filteredItems => regex.test(filteredItems.pname));
    currentPage = 0;
    ShowItems(getCurrentPageItems());
    updateButtons();
 } 
-function ClearHistory() {
-  history.replaceState(null, '', location.href);
-  history.pushState(null, '', location.href);
-  window.addEventListener('popstate', function() {
-    history.pushState(null, '', location.href);
-  });
-}
-window.onpopstate = function(event) {
-   if (event.state && event.state.page !== undefined) {
-      currentPage = event.state.page;
-      ShowItems(getCurrentPageItems());
-      updateButtons();
-   }
-};
