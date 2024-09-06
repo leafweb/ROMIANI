@@ -7,6 +7,7 @@ let menuBtn = document.querySelector('#menuBtn');
 let fab = document.querySelector('button.fab');
 let listElm = document.querySelector('#list');
 let dialog = document.querySelector('dialog');
+let pageNumElm = document.querySelector('#pageNum');
 let AddClass = (x, y) => {
    if (!x.classList.contains(y)) {
       x.classList.add(y);
@@ -79,7 +80,7 @@ window.addEventListener('scroll', () => {
 let url = 'data.json';
 let currentPage = 0;
 let currentSearch = '';
-let pageSize = 50;
+let pageSize = 20;
 let items = [];
 let filteredItems = [];
 let searchedItems = [];
@@ -104,6 +105,7 @@ function getCurrentPageItems() {
   let start = currentPage * pageSize;
   let end = start + pageSize;
   finalResults = searchedItems.slice(start, end);
+  pageNumElm.innerHTML = (currentPage + 1) + ' / ' + (Number((searchedItems.length / pageSize).toFixed(0)) + 1); 
   return finalResults
 }
 function Next() {

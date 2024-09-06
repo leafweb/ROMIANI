@@ -693,15 +693,14 @@
 	 -webkit-box-direction: normal;
 	     -ms-flex-flow: row nowrap;
 	         flex-flow: row nowrap;
-	 -webkit-box-pack: justify;
-	     -ms-flex-pack: justify;
-	         justify-content: space-between;
-	 -webkit-box-align: stretch;
-	     -ms-flex-align: stretch;
-	         align-items: stretch;
-	 height: 50px;
+	 -webkit-box-pack: center;
+	     -ms-flex-pack: center;
+	         justify-content: center;
+	 -webkit-box-align: center;
+	     -ms-flex-align: center;
+	         align-items: center;
 	 padding: 8px;
-	 gap: 8px;
+	 gap: 10px;
 	 background: var(--light-primary);
 }
  .next-back button {
@@ -712,15 +711,25 @@
 	 color: var(--on-dark-primary);
 	 outline: none;
 	 border: none;
-	 border-radius: 30px;
+	 width: 70px;
+	 height: 70px;
 	 font-size: 14px;
 	 font-weight: 900;
+	 -webkit-mask-size: contain;
+            mask-size: contain;
+    -webkit-mask-position: center;
+            mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-image: url(shape/snow.svg);
+            mask-image: url(shape/snow.svg);
 	 -webkit-transition: 0.3s;
 	 -o-transition: 0.3s;
 	 transition: 0.3s;
 }
  .next-back button:active {
 	 scale: 0.9;
+	 
 }
  .next-back button:disabled {
 	 opacity: 0.5;
@@ -765,7 +774,6 @@
 }
  input[type="radio"].chip::after, input[type="checkbox"].chip::after {
 	 content: attr(value);
-	 display: block;
 	 background: var(--light-primary);
 	 color: var(--on-light-primary);
 	 height: 30px;
