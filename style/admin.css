@@ -1,0 +1,1006 @@
+@font-face {
+  font-family: "Biennale";
+  src: url(font/Biennale.ttf);
+}
+:host,
+:root {
+  --background: hsl(21, 92%, 95%);
+  --on-background: hsl(21, 92%, 15%);
+  --surface: hsl(22, 85%, 97%);
+  --primary: hsl(22, 85%, 85%);
+  --on-primary: hsl(22, 85%, 10%);
+  --light-primary: hsl(22, 85%, 90%);
+  --on-light-primary: hsl(22, 42%, 30%);
+  --dark-primary: hsl(22, 42%, 10%);
+  --on-dark-primary: hsl(22, 42%, 70%);
+  --secondary: hsl(36, 68%, 33%);
+  --on-secondary: hsl(36, 68%, 82%);
+  --light-secondary: hsl(36, 68%, 85%);
+  --on-light-secondary: hsl(36, 68%, 30%);
+  --tertiary: hsl(112, 28%, 84%);
+  --on-tertiary: hsl(112, 28%, 10%);
+  --light-tertiary: hsl(112, 28%, 90%);
+  --on-light-tertiary: hsl(112, 28%, 30%);
+  --error: hsl(0, 85%, 85%);
+  --on-error: hsl(0, 85%, 10%);
+  --light-error: hsl(0, 85%, 90%);
+  --on-light-error: hsl(0, 42%, 30%);
+}
+* {
+  font-family: "Biennale";
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  accent-color: var(--secondary);
+  -webkit-tap-highlight-color: transparent;
+}
+::-moz-selection {
+  background: var(--secondary);
+  color: var(--on-secondary);
+}
+::selection {
+  background: var(--secondary);
+  color: var(--on-secondary);
+}
+::-webkit-scrollbar-track {
+  display: none;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background: var(--light-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #000;
+}
+/*** layout ***/
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--on-background);
+}
+header {
+  position: sticky;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 68px;
+  background: var(--light-primary);
+  color: var(--on-light-primary);
+  border-bottom: solid 2px var(--primary);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  font-size: 26px;
+  font-weight: 900;
+  z-index: 10;
+}
+header button {
+  position: relative;
+  top: 0;
+  left: 0;
+  border: none;
+  background: var(--light-error);
+  color: var(--on-light-error);
+  border-radius: 10px;
+  -webkit-box-shadow: 2px 2px 0 var(--error);
+          box-shadow: 2px 2px 0 var(--error);
+  height: 100%;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+header button:active {
+  top: 2px;
+  left: 2px;
+  -webkit-box-shadow: 0 0 0 var(--error);
+          box-shadow: 0 0 0 var(--error);
+}
+main {
+  padding: 20px;
+}
+main section {
+  background: var(--light-primary);
+  color: var(--on-light-primary);
+  border-radius: 30px;
+  overflow: hidden;
+}
+#searchbox {
+  position: relative;
+  padding: 10px;
+  border-bottom: 3px dashed var(--primary);
+}
+#searchbox input {
+  outline: none;
+  border: none;
+  border-radius: 16px;
+  z-index: 11;
+  display: block;
+  height: 50px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  padding-left: 50px;
+  text-align: left;
+  width: 100%;
+  font-size: 18px;
+  background: var(--background);
+  color: var(--on-background);
+  -webkit-box-shadow: 2px 2px 0 var(--primary);
+          box-shadow: 2px 2px 0 var(--primary);
+}
+#searchbox input:focus {
+  background: #fff;
+}
+#searchbox svg {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 28px;
+}
+#filters > form {
+  padding: 10px;
+  border-bottom: 3px dashed var(--primary);
+  text-align: center;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  background: var(--light-primary);
+  color: var(--on-light-primary);
+  overflow: auto hidden;
+  white-space: nowrap;
+}
+#filters > form::-webkit-scrollbar {
+  display: none;
+}
+#list {
+  padding: 10px;
+  border-bottom: 3px dashed var(--primary);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  gap: 8px;
+}
+#list .add {
+  position: relative;
+  top: 0;
+  left: 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 40%;
+          flex: 1 0 40%;
+  min-width: 240px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 28px;
+  border-radius: 20px;
+  background: var(--background);
+  -webkit-box-shadow: 2px 2px 0 var(--primary);
+          box-shadow: 2px 2px 0 var(--primary);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+#list .add:active {
+  top: 2px;
+  left: 2px;
+  background: var(--primary);
+  -webkit-box-shadow: 0 0 0 var(--primary);
+          box-shadow: 0 0 0 var(--primary);
+}
+#list .item {
+  position: relative;
+  top: 0;
+  left: 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 40%;
+          flex: 1 0 40%;
+  min-width: 240px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-flow: row-reverse nowrap;
+          flex-flow: row-reverse nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  border-radius: 20px;
+  background: var(--background);
+  -webkit-box-shadow: 2px 2px 0 var(--primary);
+          box-shadow: 2px 2px 0 var(--primary);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+#list .item:active {
+  top: 2px;
+  left: 2px;
+  background: var(--primary);
+  -webkit-box-shadow: 0 0 0 var(--primary);
+          box-shadow: 0 0 0 var(--primary);
+}
+#list .item .card {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  height: 100px;
+  gap: 8px;
+  padding: 8px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+#list .item .card .profile {
+  aspect-ratio: 1;
+  height: 100%;
+}
+#list .item .card .profile img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: caver;
+     object-fit: caver;
+  border-radius: 20px;
+  background: var(--primary);
+}
+#list .item .card .text {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+#list .item .card .text .title {
+  font-weight: 900;
+  font-size: 18px;
+}
+#list .item .card .text div {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+#list .item .card .text div .type {
+  background: var(--light-secondary);
+  color: var(--on-light-secondary);
+  border-radius: 10px;
+  padding: 2px 4px;
+}
+#list .tools {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+}
+#list .tools button {
+  position: relative;
+  top: 0;
+  left: 0;
+  aspect-ratio: 1;
+  outline: none;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+#list .tools button.edit {
+  background: var(--light-tertiary);
+  color: var(--on-light-tertiary);
+  -webkit-box-shadow: 2px 2px 0 var(--tertiary);
+          box-shadow: 2px 2px 0 var(--tertiary);
+}
+#list .tools button.edit:active {
+  top: 2px;
+  left: 2px;
+  -webkit-box-shadow: 0 0 0 var(--tertiary);
+          box-shadow: 0 0 0 var(--tertiary);
+}
+#list .tools button.remove {
+  background: var(--light-error);
+  color: var(--on-light-error);
+  -webkit-box-shadow: 2px 2px 0 var(--error);
+          box-shadow: 2px 2px 0 var(--error);
+}
+#list .tools button.remove:active {
+  top: 2px;
+  left: 2px;
+  -webkit-box-shadow: 0 0 0 var(--error);
+          box-shadow: 0 0 0 var(--error);
+}
+#next-back {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+#next-back button {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  background: var(--dark-primary);
+  color: var(--on-dark-primary);
+  outline: none;
+  border: none;
+  width: 70px;
+  height: 70px;
+  font-size: 14px;
+  font-weight: 900;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: url(shape/snow.svg);
+  mask-image: url(shape/snow.svg);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+#next-back button:active {
+  scale: 0.9;
+}
+#next-back button:disabled {
+  opacity: 0.5;
+}
+dialog {
+  width: 80%;
+  max-height: 80%;
+  background: var(--background);
+  color: var(--on-background);
+  border: none;
+  outline: none;
+  border: 5px solid var(--light-primary);
+  border-width: 0 5px 5px 0;
+  border-radius: 30px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-animation: show 0.5s both;
+          animation: show 0.5s both;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+dialog[open] {
+  display: block;
+}
+dialog::-webkit-backdrop {
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+}
+dialog::backdrop {
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+}
+dialog#preview {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  padding: 0;
+}
+dialog#preview[open] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+dialog#preview img {
+  display: block;
+}
+dialog#preview .text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-flex: 3;
+      -ms-flex-positive: 3;
+          flex-grow: 3;
+  padding: 10px;
+}
+dialog#preview .text .title {
+  display: block;
+  font-weight: 600;
+  font-size: 26px;
+  padding: 16px 0;
+}
+dialog#preview .text .d {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 8px 0;
+}
+dialog#preview .text .d .type {
+  background: var(--secondary);
+  color: var(--on-secondary);
+  border-radius: 10px;
+  padding: 2px 4px;
+}
+@media (max-width: 480px) {
+  dialog#preview {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+  }
+}
+@media (min-width: 481px) {
+  dialog#preview {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+  }
+  dialog#preview img {
+    height: 100%;
+    max-height: 400px;
+  }
+}
+dialog#edit {
+  padding: 0;
+}
+dialog#edit form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+dialog#edit form label {
+  display: block;
+}
+dialog#edit form label img {
+  display: block;
+  max-width: 100%;
+}
+dialog#edit form label input {
+  display: none;
+}
+dialog#edit form .text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-flex: 3;
+      -ms-flex-positive: 3;
+          flex-grow: 3;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+dialog#edit form .text textarea {
+  margin: 10px 0;
+}
+dialog#edit form .text .d {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+dialog#edit form .text .d .type {
+  background: var(--secondary);
+  color: var(--on-secondary);
+  border-radius: 10px;
+  padding: 2px 4px;
+}
+dialog#edit form .text .btns {
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+dialog#edit form .text .btns > * {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+dialog#edit form .text .btns > *.edit {
+  background: var(--light-tertiary);
+  color: var(--on-light-tertiary);
+  -webkit-box-shadow: 2px 2px 0 var(--tertiary);
+          box-shadow: 2px 2px 0 var(--tertiary);
+}
+dialog#edit form .text .btns > *.edit:active {
+  -webkit-box-shadow: 0 0 0 var(--tertiary);
+          box-shadow: 0 0 0 var(--tertiary);
+}
+@media (max-width: 480px) {
+  dialog#edit form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+  }
+}
+@media (min-width: 481px) {
+  dialog#edit form {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+  }
+  dialog#edit form img {
+    height: 100%;
+    max-height: 400px;
+  }
+}
+dialog#add {
+  padding: 0;
+}
+dialog#add form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+dialog#add form label {
+  display: block;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 250px;
+}
+dialog#add form label img {
+  min-width: 100px;
+  display: block;
+  max-width: 100%;
+}
+dialog#add form label input {
+  display: none;
+}
+dialog#add form .text {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-box-flex: 3;
+      -ms-flex-positive: 3;
+          flex-grow: 3;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+dialog#add form .text textarea {
+  margin: 10px 0;
+}
+dialog#add form .text .d {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+dialog#add form .text .d .type {
+  background: var(--secondary);
+  color: var(--on-secondary);
+  border-radius: 10px;
+  padding: 2px 4px;
+}
+dialog#add form .text .btns {
+  margin-top: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+dialog#add form .text .btns > * {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+dialog#add form .text .btns > *.edit {
+  background: var(--light-tertiary);
+  color: var(--on-light-tertiary);
+  -webkit-box-shadow: 2px 2px 0 var(--tertiary);
+          box-shadow: 2px 2px 0 var(--tertiary);
+}
+dialog#add form .text .btns > *.edit:active {
+  -webkit-box-shadow: 0 0 0 var(--tertiary);
+          box-shadow: 0 0 0 var(--tertiary);
+}
+@media (max-width: 480px) {
+  dialog#add form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+  }
+}
+@media (min-width: 481px) {
+  dialog#add form {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+  }
+  dialog#add form img {
+    height: 100%;
+    max-height: 400px;
+  }
+}
+dialog#remove {
+  text-align: center;
+}
+dialog#remove svg {
+  width: 100px;
+  fill: var(--on-error);
+}
+dialog#remove .btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+}
+dialog#remove .btns > * {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+dialog#remove .btns .del {
+  background: var(--light-error);
+  color: var(--on-light-error);
+  -webkit-box-shadow: 2px 2px 0 var(--error);
+          box-shadow: 2px 2px 0 var(--error);
+}
+dialog#remove .btns .del:active {
+  -webkit-box-shadow: 0 0 0 var(--error);
+          box-shadow: 0 0 0 var(--error);
+}
+input[type="checkbox"].switch {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  display: block;
+  position: relative;
+  width: 50px;
+  height: 30px;
+  background: var(--light-primary);
+  border-radius: 30px;
+  margin: 0;
+}
+input[type="checkbox"].switch::after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  border-radius: 26px;
+  background: var(--dark-primary);
+  top: 2px;
+  left: 2px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+input[type="checkbox"].switch:checked::after {
+  left: 22px;
+}
+input[type="radio"].chip,
+input[type="checkbox"].chip {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  margin: 0;
+  display: inline-block;
+  position: relative;
+  border-radius: 30px;
+}
+input[type="radio"].chip::after,
+input[type="checkbox"].chip::after {
+  content: attr(value);
+  background: var(--background);
+  color: var(--on-background);
+  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-inline: 8px;
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 2px 0 var(--primary);
+          box-shadow: 2px 2px 0 var(--primary);
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+input[type="radio"].chip:checked::after,
+input[type="checkbox"].chip:checked::after {
+  background: var(--dark-primary);
+  color: var(--on-dark-primary);
+  -webkit-box-shadow: 2px 2px 0 var(--on-dark-primary);
+          box-shadow: 2px 2px 0 var(--on-dark-primary);
+}
+input[type="text"] {
+  outline: none;
+  border: none;
+  border-radius: 16px;
+  display: block;
+  height: 50px;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  text-align: left;
+  padding: 0 16px;
+  width: 100%;
+  font-size: 18px;
+  background: var(--surface);
+  color: var(--on-surface);
+  -webkit-box-shadow: 2px 2px 0 var(--primary);
+          box-shadow: 2px 2px 0 var(--primary);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+input[type="text"]:focus {
+  background: #fff;
+}
+textarea {
+  padding: 16px;
+  outline: none;
+  border: none;
+  border-radius: 16px;
+  display: block;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  text-align: left;
+  width: 100%;
+  font-size: 18px;
+  background: var(--surface);
+  color: var(--on-surface);
+  -webkit-box-shadow: 2px 2px 0 var(--primary);
+          box-shadow: 2px 2px 0 var(--primary);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  resize: none;
+}
+textarea:focus {
+  background: #fff;
+}
+button {
+  position: relative;
+  top: 0;
+  left: 0;
+  border: none;
+  background: var(--light-primary);
+  color: var(--on-light-primary);
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 2px 0 var(--primary);
+          box-shadow: 2px 2px 0 var(--primary);
+  height: 50px;
+  padding: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+button:active {
+  top: 2px;
+  left: 2px;
+  -webkit-box-shadow: 0 0 0 var(--primary);
+          box-shadow: 0 0 0 var(--primary);
+}
+@-webkit-keyframes show {
+  from {
+    top: 100px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+@keyframes show {
+  from {
+    top: 100px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
