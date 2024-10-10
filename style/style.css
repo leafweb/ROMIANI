@@ -476,7 +476,13 @@ section.part2 {
   padding: 16px;
 }
 section.part2 div.video {
-   text-align: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+section.part2 div.video video{
+   background: var(--light-primary);
+   flex-grow: 1;
 }
 section.part2 ul {
   margin: 0;
