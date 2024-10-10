@@ -105,7 +105,7 @@ function getCurrentPageItems() {
   let start = currentPage * pageSize;
   let end = start + pageSize;
   finalResults = searchedItems.slice(start, end);
-  pageNumElm.innerHTML = (currentPage + 1) + ' / ' + (Number((searchedItems.length / pageSize).toFixed(0)) + 1); 
+  pageNumElm.innerHTML = (currentPage + 1) + ' / ' + (Math.ceil(searchedItems.length / pageSize)); 
   return finalResults
 }
 function Next() {

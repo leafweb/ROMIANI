@@ -475,6 +475,9 @@ section.start-part .waveflip svg {
 section.part2 {
   padding: 16px;
 }
+section.part2 div.video {
+   text-align: center;
+}
 section.part2 ul {
   margin: 0;
   padding: 0;
@@ -711,6 +714,13 @@ section.part4 .text p {
   text-align: justify;
 }
 /*** UI ***/
+video{
+   display: inline-block;
+   width: 100%;
+   border-radius: 20px;
+   border: 4px solid var(--primary);
+   max-width: 400px;
+}
 .wave {
   width: 100%;
 }
