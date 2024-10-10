@@ -715,7 +715,6 @@ section.part4 .text p {
 }
 /*** UI ***/
 video{
-   display: inline-block;
    width: 100%;
    border-radius: 20px;
    border: 4px solid var(--primary);
